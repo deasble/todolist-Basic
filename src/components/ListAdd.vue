@@ -5,7 +5,6 @@
           v-model="memo"
           label="투두리스트를 입력해주세요."
           value=""
-          @keyup.alt.enter="listAdd"
         ></v-textarea>
         <v-btn v-if="mode === 'add'" @click="listAdd">리스트 추가</v-btn>
         <v-btn v-else @click="listEdit">리스트 수정</v-btn>
