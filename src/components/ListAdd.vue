@@ -4,7 +4,6 @@
           outline
           v-model="memo"
           label="투두리스트를 입력해주세요."
-          value=""
         ></v-textarea>
         <v-btn v-if="mode === 'add'" @click="listAdd">리스트 추가</v-btn>
         <v-btn v-else @click="listEdit">리스트 수정</v-btn>
@@ -18,24 +17,24 @@ export default {
     data(){
         return{
             memo: null,
-            index: null,
             mode: 'add',
         }
     },
-    created(){
-        eventBus.$on('listEdit', (memo,index) => {
-            this.memo = memo
-            this.index = index
-            this.mode = 'edit'      
-        })
+    computed: {
+        todo() {
+            return this.$store.state.todo;
+        }
+    },
+    created() {
+        if(this.todo !== null) {this.memo = this.todo}
     },
     methods:{
         listAdd(){
             if(this.memo === null || this.memo.includes(`\n`)){
-                alert("할일을 입력해주세요.")
+                alert("할일을 입력해주세요.");
             } else {
-                this.$emit('listAdd',this.memo)
-                this.clearList()
+                this.$store.commit('listAdd', {memo: this.memo, status: 'created'});
+                this.clearList();
             }
         },
         clearList(){
@@ -45,9 +44,8 @@ export default {
             if(this.memo === null || this.memo.includes(`\n`)){
                 alert("할일을 입력해주세요.")
             } else {
-                this.$emit('listEdit',this.memo,this.index)
-                this.clearList()
-                this.mode = 'add'
+                this.clearList();
+                this.mode = 'add';
             }
         }
     }
