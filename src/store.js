@@ -6,14 +6,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     todoList: [],
-    todo: null,
+    memo: null,
+    editTodo: null,
   },
   mutations: {
     listAdd: (state, payload) => { state.todoList.push(payload) },
     changeStatus: (state, payload) => { state.todoList[payload.index].status = payload.status },
     deleteMemo: (state, payload) => { state.todoList.splice(payload, 1) },
-    editMemo: (state,payload) => { state.todo = payload },
-    listEdit: (state, payload) => { state.todoList[index].memo = payload},
+    listEdit: (state,payload) => { state.todoList[payload.index].memo = payload.memo },
   },
   actions: {},
   getters: {},

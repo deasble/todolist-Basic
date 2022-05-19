@@ -17,38 +17,32 @@ export default {
     data(){
         return{
             memo: null,
+            index: null,
             mode: 'add',
         }
     },
-    computed: {
-        todo() {
-            return this.$store.state.todo;
-        }
-    },
     created() {
-        if(this.todo !== null) {this.memo = this.todo}
+        eventBus.$on('listEdit', (memo,index) => {
+            this.memo = memo;
+            this.index = index;
+            this.mode = 'edit';
+        })
     },
     methods:{
         listAdd(){
-            if(this.memo === null || this.memo.includes(`\n`)){
+            if(this.memo === null){
                 alert("할일을 입력해주세요.");
             } else {
                 this.$store.commit('listAdd', {memo: this.memo, status: 'created'});
-                this.clearList();
+                this.memo = null;
             }
         },
-        clearList(){
-            this.memo = null
-        },
-        listEdit(){
-            if(this.memo === null || this.memo.includes(`\n`)){
-                alert("할일을 입력해주세요.")
-            } else {
-                this.clearList();
-                this.mode = 'add';
-            }
+        listEdit() {
+            this.$store.commit('listEdit',{memo: this.memo, index: this.index});
+            this.mode = 'add',
+            this.memo = null;
         }
-    }
+    },
 }
 </script>
 

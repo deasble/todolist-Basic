@@ -2,14 +2,14 @@
   <div>
     <v-card class="pa-3 mb-2" :class="{'done' : list.status==='done'}" v-for="(list,index) in todoList" :key="index">
         <p>{{ list.memo }}</p>
-        <!-- done -->
+        <!-- Done -->
         <v-btn v-if="list.status === 'created'" fab flat small color="green" @click="changeStatus(index, 'done')"><i class="fa-solid fa-check"></i></v-btn>
-        <!-- restore -->
+        <!-- Restore -->
         <v-btn v-if="list.status === 'done'" fab flat small color="blue" @click="changeStatus(index, 'created')"><i class="fa-solid fa-arrows-rotate"></i></v-btn>
         <!-- Delete -->
         <v-btn fab flat small color="red" @click="deleteMemo(index)"><i class="fa-solid fa-trash-can"></i></v-btn>
-        <!-- created -->
-        <v-btn v-if="list.status === 'created'" fab flat small color="yellow" @click="editMemo(list.memo)"><i class="fa-solid fa-edit"></i></v-btn>
+        <!-- Edit -->
+        <v-btn v-if="list.status === 'created'" fab flat small color="yellow" @click="editMemo(list.memo,index)"><i class="fa-solid fa-edit"></i></v-btn>
     </v-card>
   </div>
 </template>
@@ -30,8 +30,8 @@ export default {
       deleteMemo(index) {
         this.$store.commit('deleteMemo', index)
       },
-      editMemo(memo){
-        this.$store.commit('editMemo', {memo})
+      editMemo(memo,index){
+        eventBus.$emit('listEdit',memo,index)
       },
     }
 }
