@@ -4,7 +4,6 @@
           outline
           v-model="memo"
           label="투두리스트를 입력해주세요."
-          @keyup.enter="listAdd"
         ></v-textarea>
         <v-btn v-if="status === 'created'" @click="listAdd">리스트 추가</v-btn>
         <v-btn v-else @click="listEdit">리스트 수정</v-btn>
@@ -34,7 +33,6 @@ export default {
             if(this.memo === null){
                 alert("할일을 입력해주세요.");
             } else {
-                
                 this.$store.commit('listAdd', {memo: this.memo.replace(/\n/g,""), status: 'created'});
                 this.memo = null;
             }
