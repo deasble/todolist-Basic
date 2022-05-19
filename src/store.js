@@ -16,5 +16,19 @@ export default new Vuex.Store({
     listEdit: (state,payload) => { state.todoList[payload.index].memo = payload.memo },
   },
   actions: {},
-  getters: {},
+  getters: {
+    ListLength: (state) => { return state.todoList.length },
+    ListDone: (state) =>{
+      let count = 0;
+      var i
+      if(state.todoList.length !== 0){
+        for(i = 1; i <= state.todoList.length; i++) {
+          if(state.todoList[i-1].status === "done"){
+            count += 1;
+          }
+        }
+      }
+      return count;
+    }
+  },
 })
