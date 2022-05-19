@@ -30,7 +30,7 @@ export default {
     },
     methods:{
         listAdd(){
-            if(this.memo === null){
+            if(this.memo === null || this.memo === ""){
                 alert("할일을 입력해주세요.");
             } else {
                 this.$store.commit('listAdd', {memo: this.memo.replace(/\n/g,""), status: 'created'});
@@ -38,10 +38,14 @@ export default {
             }
         },
         listEdit() {
-            this.$store.commit('listEdit',{memo: this.memo.replace(/\n/g,""), index: this.index});
-            this.status = 'created',
-            this.$store.commit('changeStatus', {status: this.status, index: this.index})
-            this.memo = null;
+            if(this.memo === "") {
+                alert("할일을 입력해주세요.");
+            } else {
+                this.$store.commit('listEdit',{memo: this.memo.replace(/\n/g,""), index: this.index});
+                this.status = 'created',
+                this.$store.commit('changeStatus', {status: this.status, index: this.index})
+                this.memo = null;
+            }
         }
     },
 }
