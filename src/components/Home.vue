@@ -20,11 +20,6 @@ import List from './List.vue'
 import ListAdd from './ListAdd.vue'
 
 export default {
-  methods: {
-    listEdit(memo,index){
-      this.todoList[index].memo = memo
-    }
-  },
   components:{
     List,
     ListAdd,
