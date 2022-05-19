@@ -38,7 +38,7 @@ export default {
             }
         },
         listEdit() {
-            this.$store.commit('listEdit',{memo: this.memo, index: this.index});
+            this.$store.commit('listEdit',{memo: this.memo.replace(/\n/g,""), index: this.index});
             this.status = 'created',
             this.$store.commit('changeStatus', {status: this.status, index: this.index})
             this.memo = null;
