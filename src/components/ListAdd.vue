@@ -6,7 +6,7 @@
           label="투두리스트를 입력해주세요."
           @keyup.enter="listAdd"
         ></v-textarea>
-        <v-btn v-if="mode === 'add'" @click="listAdd">리스트 추가</v-btn>
+        <v-btn v-if="status === 'created'" @click="listAdd">리스트 추가</v-btn>
         <v-btn v-else @click="listEdit">리스트 수정</v-btn>
   </div>
 </template>
@@ -19,14 +19,14 @@ export default {
         return{
             memo: null,
             index: null,
-            mode: 'add',
+            status: 'created',
         }
     },
     created() {
-        eventBus.$on('listEdit', (memo,index) => {
+        eventBus.$on('listEdit', (memo,index,status) => {
             this.memo = memo;
             this.index = index;
-            this.mode = 'edit';
+            this.status = status;
         })
     },
     methods:{
@@ -41,7 +41,8 @@ export default {
         },
         listEdit() {
             this.$store.commit('listEdit',{memo: this.memo, index: this.index});
-            this.mode = 'add',
+            this.status = 'created',
+            this.$store.commit('changeStatus', {status: this.status, index: this.index})
             this.memo = null;
         }
     },

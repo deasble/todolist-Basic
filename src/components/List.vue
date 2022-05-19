@@ -7,9 +7,9 @@
         <!-- Restore -->
         <v-btn v-if="list.status === 'done'" fab flat small color="blue" @click="changeStatus(index, 'created')"><i class="fa-solid fa-arrows-rotate"></i></v-btn>
         <!-- Delete -->
-        <v-btn fab flat small color="red" @click="deleteMemo(index)"><i class="fa-solid fa-trash-can"></i></v-btn>
+        <v-btn v-if="list.status !== 'edit'" fab flat small color="red" @click="deleteMemo(index)"><i class="fa-solid fa-trash-can"></i></v-btn>
         <!-- Edit -->
-        <v-btn v-if="list.status === 'created'" fab flat small color="yellow" @click="editMemo(list.memo,index)"><i class="fa-solid fa-edit"></i></v-btn>
+        <v-btn v-if="list.status === 'created'" fab flat small color="yellow" @click="editMemo(list.memo,index,'edit')"><i class="fa-solid fa-edit"></i></v-btn>
     </v-card>
   </div>
 </template>
@@ -30,8 +30,9 @@ export default {
       deleteMemo(index) {
         this.$store.commit('deleteMemo', index)
       },
-      editMemo(memo,index){
-        eventBus.$emit('listEdit',memo,index)
+      editMemo(memo,index,status){
+        eventBus.$emit('listEdit',memo,index,status)
+        this.$store.commit('changeStatus', {status,index})
       },
     }
 }
