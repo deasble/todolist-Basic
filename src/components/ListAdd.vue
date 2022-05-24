@@ -4,6 +4,7 @@
           outline
           v-model="memo"
           label="투두리스트를 입력해주세요."
+          ref="memofocus"
         ></v-textarea>
         <v-btn v-if="status === 'created'" @click="listAdd">리스트 추가</v-btn>
         <v-btn v-else @click="listEdit">리스트 수정</v-btn>
@@ -26,26 +27,37 @@ export default {
             this.memo = memo;
             this.index = index;
             this.status = status;
+            this.focusMemo();
         })
     },
+    mounted() {
+        this.focusMemo();
+    },
     methods:{
-        listAdd(){
+        listAdd() {
             if(this.memo === null || this.memo === ""){
                 alert("할일을 입력해주세요.");
+                this.focusMemo();
             } else {
                 this.$store.commit('listAdd', {memo: this.memo.replace(/\n/g,""), status: 'created'});
                 this.memo = null;
+                this.focusMemo();
             }
         },
         listEdit() {
             if(this.memo === "") {
                 alert("할일을 입력해주세요.");
+                this.focusMemo();
             } else {
                 this.$store.commit('listEdit',{memo: this.memo.replace(/\n/g,""), index: this.index});
                 this.status = 'created',
                 this.$store.commit('changeStatus', {status: this.status, index: this.index})
                 this.memo = null;
+                this.focusMemo();
             }
+        },
+        focusMemo() {
+            this.$refs.memofocus.focus();
         }
     },
 }
