@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card class="pa-3 mb-2" :class="{'done' : list.status==='done'}" v-for="(list,index) in todoList" :key="index">
-        <p>{{ list }}</p>
+        <p>{{ list.memo }}</p>
         <!-- Done -->
         <v-btn v-if="list.status === 'created'" fab flat small color="green" @click="changeStatus(index, 'done')"><i class="fa-solid fa-check"></i></v-btn>
         <!-- Restore -->
