@@ -16,7 +16,7 @@ export default new Vuex.Store({
     listEdit: (state,payload) => { state.todoList[payload.index].memo = payload.memo },
   },
   actions: {
-    AddAndEdit: ({commit}, payload) => {
+    SET_TODOLIST: ({commit}, payload) => {
       const memoValid = /\n/
       if(memoValid.test(payload.memo) || payload.memo === null || payload.memo === ""){
         alert("다시 입력해주세요.")
@@ -26,8 +26,8 @@ export default new Vuex.Store({
         commit('listEdit', payload)
       }
     },
-    changeStatus: ({commit}, payload) => { commit('changeStatus', payload) },
-    deleteMemo: ({commit}, payload) => { commit('deleteMemo', payload) }, 
+    SET_STATUS: ({commit}, payload) => { commit('changeStatus', payload) },
+    DELETE_MEMO: ({commit}, payload) => { commit('deleteMemo', payload) }, 
   },
   getters: {
     ListLength: (state) => { return state.todoList.length },

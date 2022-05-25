@@ -13,6 +13,7 @@
 
 <script>
 import { eventBus } from '../main.js'
+import { mapActions } from 'vuex';
 
 export default {
     data(){
@@ -34,15 +35,16 @@ export default {
         this.focusMemo();
     },
     methods:{
+        ...mapActions(['SET_TODOLIST', 'SET_STATUS']),
         listAdd() {
-            this.$store.dispatch('AddAndEdit', {memo: this.memo, status: this.status})
+            this.SET_TODOLIST({memo: this.memo, status: this.status})
             this.memo = null
             this.focusMemo()
         },
         listEdit() {
-            this.$store.dispatch('AddAndEdit',{memo: this.memo, index: this.index})
+            this.SET_TODOLIST({memo: this.memo, index: this.index})
             this.status = 'created'
-            this.$store.dispatch('changeStatus', {status: this.status, index: this.index})
+            this.SET_STATUS({status: this.status, index: this.index})
             this.memo = null
             this.focusMemo()
         },

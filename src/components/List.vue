@@ -16,22 +16,23 @@
 
 <script>
 import { eventBus } from '../main.js'
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
     computed: {
       ...mapState(['todoList'])
     },
     methods: {
+      ...mapActions(['SET_STATUS', 'DELETE_MEMO']),
       changeStatus(index, status){
-        this.$store.dispatch('changeStatus', {status,index})
+        this.SET_STATUS({status,index})
       },
       deleteMemo(index) {
-        this.$store.commit('deleteMemo', index)
+        this.DELETE_MEMO(index)
       },
       editMemo(memo,index,status){
         eventBus.$emit('listEdit',memo,index,status)
-        this.$store.dispatch('changeStatus', {status,index})
+        this.SET_STATUS({status,index})
       },
     }
 }
