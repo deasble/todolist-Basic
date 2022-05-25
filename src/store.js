@@ -18,14 +18,11 @@ export default new Vuex.Store({
   actions: {},
   getters: {
     ListLength: (state) => { return state.todoList.length },
-    ListDone: (state, getters) =>{
+    ListDone: (state) =>{
       let count = 0;
-      var i
-      if(getters.ListLength !== 0){
-        state.todoList.forEach(todo => {
-          if(todo.status === 'done') count++;
-        })
-      }
+      state.todoList.forEach(todo => {
+        if(todo.status === 'done') count++;
+      })
       return count;
     }
   },
