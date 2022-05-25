@@ -7,14 +7,14 @@
 
 <script>
 export default {
-    computed: {
-        ListLength() {
-        return this.$store.getters.ListLength;
-        },
-        ListDone() {
-        return this.$store.getters.ListDone;
-        },
+  computed: {
+    ListLength() {
+      return this.$store.getters.ListLength;
     },
+    ListDone() {
+      return this.$store.getters.ListDone;
+    },
+  },
 }
 </script>
 
