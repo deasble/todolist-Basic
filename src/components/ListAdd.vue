@@ -35,29 +35,19 @@ export default {
     },
     methods:{
         listAdd() {
-            if(this.memo === null || this.memo === ""){
-                alert("할일을 입력해주세요.");
-                this.focusMemo();
-            } else {
-                this.$store.commit('listAdd', {memo: this.memo.replace(/\n/g,""), status: 'created'});
-                this.memo = null;
-                this.focusMemo();
-            }
+            this.$store.dispatch('AddAndEdit', {memo: this.memo, status: this.status})
+            this.memo = null
+            this.focusMemo()
         },
         listEdit() {
-            if(this.memo === "") {
-                alert("할일을 입력해주세요.");
-                this.focusMemo();
-            } else {
-                this.$store.commit('listEdit',{memo: this.memo.replace(/\n/g,""), index: this.index});
-                this.status = 'created',
-                this.$store.commit('changeStatus', {status: this.status, index: this.index})
-                this.memo = null;
-                this.focusMemo();
-            }
+            this.$store.dispatch('AddAndEdit',{memo: this.memo, index: this.index})
+            this.status = 'created'
+            this.$store.dispatch('changeStatus', {status: this.status, index: this.index})
+            this.memo = null
+            this.focusMemo()
         },
         focusMemo() {
-            this.$refs.memofocus.focus();
+            this.$refs.memofocus.focus()
         }
     },
 }

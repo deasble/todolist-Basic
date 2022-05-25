@@ -15,7 +15,20 @@ export default new Vuex.Store({
     deleteMemo: (state, payload) => { state.todoList.splice(payload, 1) },
     listEdit: (state,payload) => { state.todoList[payload.index].memo = payload.memo },
   },
-  actions: {},
+  actions: {
+    AddAndEdit: ({commit}, payload) => {
+      const memoValid = /\n/
+      if(memoValid.test(payload.memo) || payload.memo === null || payload.memo === ""){
+        alert("다시 입력해주세요.")
+      } else if(payload.index === undefined){
+        commit('listAdd', payload)
+      } else {
+        commit('listEdit', payload)
+      }
+    },
+    changeStatus: ({commit}, payload) => { commit('changeStatus', payload) },
+    deleteMemo: ({commit}, payload) => { commit('deleteMemo', payload) }, 
+  },
   getters: {
     ListLength: (state) => { return state.todoList.length },
     ListDone: (state) =>{

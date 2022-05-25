@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card class="pa-3 mb-2" :class="{'done' : list.status==='done'}" v-for="(list,index) in todoList" :key="index">
-        <p>{{ list.memo }}</p>
+        <p>{{ list }}</p>
         <!-- Done -->
         <v-btn v-if="list.status === 'created'" fab flat small color="green" @click="changeStatus(index, 'done')"><i class="fa-solid fa-check"></i></v-btn>
         <!-- Restore -->
@@ -24,14 +24,14 @@ export default {
     },
     methods: {
       changeStatus(index, status){
-        this.$store.commit('changeStatus', {status,index})
+        this.$store.dispatch('changeStatus', {status,index})
       },
       deleteMemo(index) {
         this.$store.commit('deleteMemo', index)
       },
       editMemo(memo,index,status){
         eventBus.$emit('listEdit',memo,index,status)
-        this.$store.commit('changeStatus', {status,index})
+        this.$store.dispatch('changeStatus', {status,index})
       },
     }
 }
