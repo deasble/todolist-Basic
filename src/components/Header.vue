@@ -6,14 +6,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   computed: {
-    ListLength() {
-      return this.$store.getters.ListLength;
-    },
-    ListDone() {
-      return this.$store.getters.ListDone;
-    },
+    ...mapGetters(['ListLength', 'ListDone'])
   },
 }
 </script>
