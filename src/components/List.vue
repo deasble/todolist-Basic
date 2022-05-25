@@ -16,12 +16,11 @@
 
 <script>
 import { eventBus } from '../main.js'
+import { mapState } from 'vuex';
 
 export default {
     computed: {
-      todoList() {
-        return this.$store.state.todoList;
-      }
+      ...mapState(['todoList'])
     },
     methods: {
       changeStatus(index, status){
